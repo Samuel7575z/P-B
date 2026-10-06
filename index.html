@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <title>Piccante & Belle — Huile Vierge de Graines de Figues de Barbarie de Calabre</title>
+  <meta name="description" content="Domaine agricole familial en Calabre. Huile d'exception de graines de figues de barbarie sauvages du détroit de Messine, pressée mécaniquement à froid sans solvant. Pureté microbiologique certifiée.">
+  
+  <!-- Mobile & Device Theming -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FAF8F5">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#161311">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Typography: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Three.js (3D WebGL Engine) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- GSAP & ScrollTrigger Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Design System Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Favicon Monogram -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231C1714'/><path d='M50 22 C36 40 32 60 50 78 C68 60 64 40 50 22 Z' fill='%23C4823F'/></svg>">
+</head>
+<body class="bg-sand text-espresso font-sans antialiased selection:bg-gold-light selection:text-espresso">
+
+  <!-- Custom Magnetic Cursor Elements -->
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Ambient Surface -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar" id="announcement-bar">
+    <div class="announcement-content">
+      <span class="pulse-dot"></span>
+      <span class="announcement-text">RÉCOLTE ARTISANALE 2026 — ÉDITION LIMITÉE DIRECT DU PRODUCTEUR EN CALABRE</span>
+      <span class="announcement-sep" aria-hidden="true">•</span>
+      <span class="delivery-notice">EXPÉDITION OFFERTE DÈS 60 € D'ACHAT</span>
+    </div>
+  </div>
+
+  <!-- Floating Island Header Navigation -->
+  <header class="header-container" id="main-header">
+    <nav class="nav-island" aria-label="Navigation principale">
+      <div class="nav-brand">
+        <a href="#hero" class="brand-link" id="brand-link">
+          <span class="brand-sub">Maison Agricole</span>
+          <span class="brand-title">Piccante & Belle</span>
+        </a>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#terroir" class="nav-item">Le Terroir</a></li>
+        <li><a href="#anatomie" class="nav-item">Le Flacon</a></li>
+        <li><a href="#artisanat" class="nav-item">L'Artisanat</a></li>
+        <li><a href="#bienfaits" class="nav-item">L'Élixir</a></li>
+        <li><a href="#comparatif" class="nav-item">Résultats</a></li>
+        <li><a href="#rituel" class="nav-item">Mode d'Emploi</a></li>
+        <li><a href="#boutique" class="nav-item">La Boutique</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Soundscape Button -->
+        <button id="soundscape-btn" class="icon-btn magnetic-target" title="Atmosphère de Calabre" aria-label="Activer ambiance sonore">
+          <svg class="sound-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg class="sound-icon-on hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+        </button>
+
+        <!-- Cart Island Button -->
+        <button id="cart-trigger" class="cart-pill-btn magnetic-target" aria-label="Ouvrir le panier de commande">
+          <span class="cart-label">Panier</span>
+          <div class="cart-badge-wrapper">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span id="cart-counter" class="cart-count">1</span>
+          </div>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-toggle" class="mobile-toggle-btn magnetic-target" aria-label="Menu de navigation" aria-expanded="false">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu Overlay Sheet -->
+  <div id="mobile-menu" class="mobile-menu-overlay" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-header">
+        <span class="brand-title-mobile">Piccante & Belle</span>
+        <button id="mobile-close" class="close-btn" aria-label="Fermer le menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="#terroir" class="mobile-nav-link">Le Terroir Mythologique</a></li>
+        <li><a href="#anatomie" class="mobile-nav-link">Le Flacon d'Artisan</a></li>
+        <li><a href="#artisanat" class="mobile-nav-link">De nos Terres à votre Peau</a></li>
+        <li><a href="#bienfaits" class="mobile-nav-link">Les 5 Pouvoirs de l'Élixir</a></li>
+        <li><a href="#comparatif" class="mobile-nav-link">Résultats Avant / Après</a></li>
+        <li><a href="#rituel" class="mobile-nav-link">Le Rituel Quotidien</a></li>
+        <li><a href="#ecologie" class="mobile-nav-link">Engagement & Écologie</a></li>
+        <li><a href="#boutique" class="mobile-nav-link">Commander l'Huile Pure</a></li>
+      </ul>
+      <div class="mobile-menu-footer">
+        <p class="mobile-tagline">Société agricole familiale — Calabre, Italie</p>
+        <p class="mobile-provenance">Détroit de Messine • Pression mécanique à froid sans solvant</p>
+      </div>
+    </div>
+  </div>
+
+  <main class="overflow-x-hidden w-full max-w-full">
+    <!-- ATTENTION (HERO SECTION WITH 3D CANVAS & DUAL BEZEL) -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        <!-- Ultra-Wide 2-3 Line Hero Title -->
+        <div class="hero-header-block">
+          <div class="eyebrow-pill">
+            <span class="brand-dot"></span>
+            <span>Domaine Agricole en Calabre • Magna Græcia</span>
+          </div>
+
+          <h1 class="hero-title max-w-6xl">
+            L'Or liquide de nos terres arides,
+            <span class="font-serif italic font-normal text-gold block-sub">directement du producteur à votre peau.</span>
+          </h1>
+
+          <p class="hero-lead max-w-3xl">
+            Pressée à froid sans aucun solvant à partir des graines de figuiers de barbarie sauvages du détroit de Messine. Une pureté microbiologique certifiée, née de la rencontre entre passion paysanne et recherche universitaire.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#boutique" class="btn-primary-island magnetic-target" id="hero-order-cta">
+              <span class="btn-text">Acquérir le Flacon 30ml</span>
+              <span class="btn-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M7 17L17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </span>
+            </a>
+
+            <a href="#anatomie" class="btn-secondary-island magnetic-target" id="hero-flacon-cta">
+              <span class="btn-text">Découvrir le Flacon</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Dual Bezel Showcase Layout with Photo Showcase -->
+        <div class="hero-stage-grid mt-12">
+          <!-- Real Luxury Photo Stage with Specular Tilt -->
+          <div class="hero-media-wrapper double-bezel tilt-card gsap-hero-image" id="hero-photo-card">
+            <div class="bezel-inner relative overflow-hidden">
+              <div class="hero-photo-showcase">
+                <img src="assets/images/hero-bottle.jpg" alt="Flacon d'huile vierge pure de graines de figues de barbarie Piccante & Belle sur pierre de Calabre" class="hero-master-photo" width="1200" height="900">
+                <div class="photo-warm-glow"></div>
+              </div>
+
+              <!-- Authentic Origin Badge -->
+              <div class="hero-photo-badge">
+                <span class="badge-dot-glow"></span>
+                <span>Récolte 2026 • Première Pression à Froid</span>
+              </div>
+
+              <div class="hero-curated-tag">
+                <span class="curated-origin">Détroit de Messine, Calabre</span>
+                <span class="curated-method">Pureté microbiologique certifiée • Flacon en verre ambré</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Scientific Summary Card with 3D Tilt -->
+          <div class="hero-meta-panel double-bezel tilt-card gsap-hero-card">
+            <div class="bezel-inner p-8 flex flex-col justify-between h-full">
+              <div>
+                <span class="meta-label">FICHE PRODUIT & PURITÉ</span>
+                <h3 class="meta-heading font-serif">1 000 mg de Vitamine E par kilo</h3>
+                <p class="meta-copy">
+                  Trois fois plus concentrée en tocophérols que l'huile d'argan, notre huile de graines d'<em>Opuntia ficus-indica</em> est un régénérateur cellulaire naturel sans équivalent.
+                </p>
+              </div>
+
+              <div class="hero-key-matrix">
+                <div class="matrix-box">
+                  <span class="matrix-val">100%</span>
+                  <span class="matrix-lbl">Pure & Vierge</span>
+                </div>
+                <div class="matrix-box">
+                  <span class="matrix-val">0 L</span>
+                  <span class="matrix-lbl">Eau d'Irrigation</span>
+                </div>
+                <div class="matrix-box">
+                  <span class="matrix-val">62%</span>
+                  <span class="matrix-lbl">Oméga 6 Végétal</span>
+                </div>
+              </div>
+
+              <div class="hero-seal-statement">
+                <div class="seal-vector">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C4823F" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 8v8"></path>
+                    <path d="M8 12h8"></path>
+                  </svg>
+                </div>
+                <div class="seal-desc">
+                  <strong>Contrôle Intégral :</strong> Des parcelles sauvages jusqu'au scellement de chaque flacon dans notre atelier en Calabre.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CINEMATIC QUOTE / SCRUBBING TEXT SECTION (LE TERROIR) -->
+    <section class="quote-scrub-section" id="terroir">
+      <div class="container max-w-5xl text-center">
+        <span class="eyebrow-pill mb-6">PHILOSOPHIE DU DOMAINE</span>
+        <blockquote class="scrub-quote font-serif" id="gsap-scrub-text">
+          C'est en observant les fruits abandonnés et inexploités au pied des falaises que la question du gaspillage s'est posée. Nous avons fait le vœu d'extraire la quintessence des graines les plus résistantes de Méditerranée.
+        </blockquote>
+        <div class="quote-signature mt-8">
+          <span class="sig-name">Artisans Presseurs & Fondateurs</span>
+          <span class="sig-loc">Piccante & Belle — Calabre</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANATOMIE DU FLACON D'ARTISAN (INTERACTIVE EDITORIAL HOTSPOT SHOWCASE) -->
+    <section id="anatomie" class="section anatomie-section">
+      <div class="container">
+        <div class="section-center-head text-center max-w-4xl mx-auto">
+          <span class="eyebrow-pill">ANATOMIE DU FLACON D'EXCEPTION</span>
+          <h2 class="section-title">
+            L'Excellence du Flacon Artisanal,
+            <span class="font-serif italic font-normal text-gold block-sub">conçu pour protéger l'un des élixirs les plus rares au monde.</span>
+          </h2>
+          <p class="section-subtitle">
+            Chaque composant de notre flacon a été pensé pour stopper l'oxydation des 1 000 mg de vitamine E naturelle et garantir un dosage d'une précision chirurgicale.
+          </p>
+        </div>
+
+        <div class="anatomie-stage-grid mt-16">
+          <!-- Interactive Photo Stage with Hotspot Markers -->
+          <div class="anatomie-stage-media double-bezel tilt-card">
+            <div class="bezel-inner relative overflow-hidden anatomie-photo-wrapper">
+              <img src="assets/images/hero-bottle.jpg" alt="Détails du flacon Piccante & Belle sur roche calabraise" class="anatomie-photo-img" width="1200" height="900">
+              <div class="anatomie-photo-overlay"></div>
+
+              <!-- Hotspot Pin 01: Pipette & Bouchon (top) -->
+              <button class="photo-hotspot-pin" data-target="pipette" style="top: 22%; left: 49%;" aria-label="Voir détails : Pipette doseuse précision">
+                <span class="pin-ring"></span>
+                <span class="pin-core">01</span>
+                <span class="pin-tooltip">Pipette Compte-Gouttes</span>
+              </button>
+
+              <!-- Hotspot Pin 02: Verre ambré (center) -->
+              <button class="photo-hotspot-pin" data-target="glass" style="top: 48%; left: 36%;" aria-label="Voir détails : Verre ambré anti-UV">
+                <span class="pin-ring"></span>
+                <span class="pin-core">02</span>
+                <span class="pin-tooltip">Verre Ambré Anti-UV</span>
+              </button>
+
+              <!-- Hotspot Pin 03: Élixir pur (bottom center) -->
+              <button class="photo-hotspot-pin" data-target="liquid" style="top: 72%; left: 52%;" aria-label="Voir détails : Élixir pressé à froid">
+                <span class="pin-ring"></span>
+                <span class="pin-core">03</span>
+                <span class="pin-tooltip">Élixir 100% Pur</span>
+              </button>
+
+              <!-- Stage Bottom Capsule -->
+              <div class="hero-curated-tag">
+                <span class="curated-origin">Conservation & Dosage Expert</span>
+                <span class="curated-method">Cliquez sur les points pour explorer chaque composant</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Hotspot Cards -->
+          <div class="anatomie-cards-col flex flex-col justify-between">
+            <div class="hotspot-card double-bezel tilt-card mb-4" data-hotspot="pipette" id="card-pipette">
+              <div class="bezel-inner p-6">
+                <span class="hotspot-number">01 / APPLICATION DE HAUTE PRÉCISION</span>
+                <h4 class="hotspot-title font-serif">Pipette Compte-Gouttes en Laiton Brossé</h4>
+                <p class="hotspot-desc">Permet un dosage microscopique goutte par goutte : 1 goutte pour le contour des yeux, 3 gouttes pour le visage entier. Aucun gaspillage de cette précieuse essence.</p>
+              </div>
+            </div>
+
+            <div class="hotspot-card double-bezel tilt-card mb-4" data-hotspot="glass" id="card-glass">
+              <div class="bezel-inner p-6">
+                <span class="hotspot-number">02 / BOUCLIER LUMINEUX</span>
+                <h4 class="hotspot-title font-serif">Verre Ambré Anti-Photo-Oxydation</h4>
+                <p class="hotspot-desc">Bloque 99% du spectre UV néfaste afin de préserver intacts les 1000 mg/kg de tocophérols naturels pendant 24 mois sans aucun conservateur chimique.</p>
+              </div>
+            </div>
+
+            <div class="hotspot-card double-bezel tilt-card" data-hotspot="liquid" id="card-liquid">
+              <div class="bezel-inner p-6">
+                <span class="hotspot-number">03 / CŒUR D'ACTIFS PURS</span>
+                <h4 class="hotspot-title font-serif">Élixir d'Extraction Mécanique Pure</h4>
+                <p class="hotspot-desc">Obtenu par pression à froid sans solvants. Près de 1 million de graines sélectionnées à la main sont nécessaires pour donner naissance à un seul litre de ce précieux nectar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HORIZONTAL PINNED GALLERY: LE VOYAGE DE L'ÉLIXIR (GSAP PINNED SCROLL) -->
+    <section id="artisanat" class="pinned-horizontal-section">
+      <div class="horizontal-pin-wrapper" id="pin-container">
+        <div class="horizontal-header-sticky container">
+          <div class="flex justify-between items-end flex-wrap gap-4">
+            <div>
+              <span class="eyebrow-pill">LE VOYAGE DE L'ÉLIXIR</span>
+              <h2 class="section-title max-w-2xl">
+                4 Étapes d'Exception,
+                <span class="font-serif italic font-normal text-gold block-sub">du champ calabrais au flacon scellé.</span>
+              </h2>
+            </div>
+            <div class="horizontal-progress-indicator">
+              <span id="journey-step-counter">01 / 04</span>
+              <div class="journey-track"><div id="journey-bar" class="journey-bar"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="horizontal-track" id="horizontal-track">
+          <!-- Step 1 -->
+          <div class="horizontal-slide double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="slide-badge-row">
+                <span class="slide-step-idx">ÉTAPE 01</span>
+                <span class="slide-origin">PARCELLES CALABRAISES</span>
+              </div>
+              <div class="slide-media-crop">
+                <img src="assets/images/calabria-terroir.jpg" alt="Récolte des figues sauvages" class="slide-img">
+              </div>
+              <div>
+                <h3 class="slide-title font-serif">Cueillette Sauvage & Tri Manuel</h3>
+                <p class="slide-text">Ramassage au lever du soleil sur les falaises arides face au détroit de Messine. Lutte contre le gaspillage en réhabilitant les fruits mûrs inexploités.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="horizontal-slide double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="slide-badge-row">
+                <span class="slide-step-idx">ÉTAPE 02</span>
+                <span class="slide-origin">LAVAGE & SÉCHAGE</span>
+              </div>
+              <div class="slide-media-crop">
+                <img src="assets/images/artisan-pressing.jpg" alt="Lavage des graines" class="slide-img">
+              </div>
+              <div>
+                <h3 class="slide-title font-serif">Extraction & Séparation des Graines</h3>
+                <p class="slide-text">Séparation délicate de la pulpe gorgée de magnésium. Les graines, extrêmement dures, sont rincées à l'eau de source et séchées au soleil méditerranéen.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="horizontal-slide double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="slide-badge-row">
+                <span class="slide-step-idx">ÉTAPE 03</span>
+                <span class="slide-origin">PRESSE MÉCANIQUE</span>
+              </div>
+              <div class="slide-media-crop">
+                <img src="assets/images/artisan-pressing.jpg" alt="Pression à froid" class="slide-img">
+              </div>
+              <div>
+                <h3 class="slide-title font-serif">Pression Lente à Froid Sans Solvant</h3>
+                <p class="slide-text">Extraction mécanique sous atmosphère contrôlée. Aucun adjuvant chimique, aucun solvant (zéro hexane). Seule la première goutte pure est retenue.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="horizontal-slide double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="slide-badge-row">
+                <span class="slide-step-idx">ÉTAPE 04</span>
+                <span class="slide-origin">LABORATOIRE PARTENAIRE</span>
+              </div>
+              <div class="slide-media-crop">
+                <img src="assets/images/hero-bottle.jpg" alt="Mise en flacon" class="slide-img">
+              </div>
+              <div>
+                <h3 class="slide-title font-serif">Validation Microbiologique & Scellage</h3>
+                <p class="slide-text">Contrôle de pureté microbiologique réalisé avec des chercheurs universitaires. Chaque flacon est numéroté et scellé à la cire dans notre atelier familial.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTEREST: GAPLESS BENTO GRID (LES 5 BIENFAITS MAJEURS) -->
+    <section id="bienfaits" class="section bienfaits-section">
+      <div class="container">
+        <div class="section-center-head text-center max-w-4xl mx-auto">
+          <span class="eyebrow-pill">LES 5 POUVOIRS DE L'ÉLIXIR</span>
+          <h2 class="section-title">
+            Une concentration botanique
+            <span class="font-serif italic font-normal text-gold block-sub">sans équivalent dans le monde végétal.</span>
+          </h2>
+          <p class="section-subtitle">
+            Analyse des 5 principes actifs majeurs identifiés dans notre huile par nos partenaires biologistes universitaires.
+          </p>
+        </div>
+
+        <!-- Mathematically Interlocking Gapless Bento Grid with 3D Tilt -->
+        <div class="gapless-bento-grid mt-16">
+          <!-- Card 1: Anti-Age (Large span) -->
+          <div class="bento-tile bento-span-8 double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="tile-top-row">
+                <span class="tile-category">ACTION CELLULAIRE MAJEURE</span>
+                <span class="tile-token">VITAMINE E & STÉROLS</span>
+              </div>
+              <div>
+                <h3 class="tile-title font-serif">Anti-Âge, Élasticité & Fermeté Cutanée</h3>
+                <p class="tile-desc">
+                  Grâce à sa richesse hors norme en tocophérols et en stérols, elle stimule les fibroblastes, affine le grain de peau, unifie le teint et atténue visiblement ridules, taches pigmentaires et cernes marqués.
+                </p>
+              </div>
+              <div class="tile-stats-triplet">
+                <div class="stat-unit">
+                  <span class="stat-number">1 000 mg</span>
+                  <span class="stat-text">De Vitamine E par kilo</span>
+                </div>
+                <div class="stat-unit">
+                  <span class="stat-number">3×</span>
+                  <span class="stat-text">Plus riche que l'Argan</span>
+                </div>
+                <div class="stat-unit">
+                  <span class="stat-number">100%</span>
+                  <span class="stat-text">Assimilation cutanée</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Cicatrisante & Réparatrice -->
+          <div class="bento-tile bento-span-4 double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="tile-top-row">
+                <span class="tile-category">RÉPARATION</span>
+                <span class="tile-token">ACIDES GRAS</span>
+              </div>
+              <div>
+                <h3 class="tile-title font-serif">Cicatrisante & Réparatrice</h3>
+                <p class="tile-desc">
+                  Gomme les cicatrices superficielles, atténue les marques d'acné et resserre les pores dilatés sans obstruer la respiration des tissus.
+                </p>
+              </div>
+              <div class="tile-footer-tag">
+                <span>Régénération épidermique accélérée</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Régénérante (Oméga 6) -->
+          <div class="bento-tile bento-span-4 double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="tile-top-row">
+                <span class="tile-category">RENOUVELLEMENT</span>
+                <span class="tile-token">OMÉGA 6</span>
+              </div>
+              <div>
+                <h3 class="tile-title font-serif">Régénérante & Séborégulatrice</h3>
+                <p class="tile-desc">
+                  L'acide linoléique stimule le renouvellement cellulaire tout en normalisant le film sébacé. Idéale pour fortifier les cheveux dévitalisés et ongles cassants.
+                </p>
+              </div>
+              <div class="tile-footer-tag">
+                <span>Indice comédogène 0 (Non comédogène)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Hydratante & Protectrice -->
+          <div class="bento-tile bento-span-4 double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="tile-top-row">
+                <span class="tile-category">HYDRATATION</span>
+                <span class="tile-token">ACIDE PALMITIQUE</span>
+              </div>
+              <div>
+                <h3 class="tile-title font-serif">Hydratation Profonde & Souplesse</h3>
+                <p class="tile-desc">
+                  Restaure la barrière lipidique intracellulaire. Protège durablement contre la perte insensible en eau tout en laissant un fini doux et non gras.
+                </p>
+              </div>
+              <div class="tile-footer-tag">
+                <span>Pénétration instantanée sous 60 secondes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5: Antioxydante Globale -->
+          <div class="bento-tile bento-span-4 double-bezel tilt-card">
+            <div class="bezel-inner p-10 flex flex-col justify-between h-full">
+              <div class="tile-top-row">
+                <span class="tile-category">PROTECTION</span>
+                <span class="tile-token">BOUCLIER RADICAUX</span>
+              </div>
+              <div>
+                <h3 class="tile-title font-serif">Bouclier Antioxydant</h3>
+                <p class="tile-desc">
+                  Neutralise les effets délétères du stress oxydatif, des rayonnements ultraviolets et de la pollution atmosphérique quotidienne.
+                </p>
+              </div>
+              <div class="tile-footer-tag">
+                <span>Défense cellulaire photoprotectrice</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE BEFORE / AFTER TEXTURE COMPARISON CURTAIN -->
+    <section id="comparatif" class="section comparatif-section bg-sand-alt">
+      <div class="container">
+        <div class="section-center-head text-center max-w-4xl mx-auto">
+          <span class="eyebrow-pill">TRANSFORMATION CUTANÉE EN 14 JOURS</span>
+          <h2 class="section-title">
+            Glissez pour Comparer les Résultats
+            <span class="font-serif italic font-normal text-gold block-sub">sur le grain de peau et l'éclat du teint.</span>
+          </h2>
+          <p class="section-subtitle">
+            Déplacez le curseur interactif de gauche à droite pour observer la réparation du film hydrolipidique et le lissage du relief épidermique.
+          </p>
+        </div>
+
+        <div class="comparison-curtain-holder double-bezel mt-16 max-w-5xl mx-auto">
+          <div class="bezel-inner relative overflow-hidden" id="curtain-container">
+            <!-- Background Image: Après 14 jours (Radiant) -->
+            <img src="assets/images/skincare-ritual.jpg" alt="Peau éclatante et régénérée après 14 jours de soin" class="curtain-img-base">
+            <span class="curtain-label label-after">APRÈS 14 JOURS (LISSÉE & ÉCLATANTE)</span>
+
+            <!-- Clipped Overlay Image: Avant (Déshydratée / Traces) -->
+            <div class="curtain-overlay-clip" id="curtain-overlay">
+              <img src="assets/images/skincare-ritual.jpg" alt="Peau avant le rituel" class="curtain-img-overlay">
+              <span class="curtain-label label-before">AVANT SOIN (DÉSHYDRATÉE & TACHES)</span>
+            </div>
+
+            <!-- Draggable Interactive Divider Bar -->
+            <div class="curtain-divider-handle" id="curtain-handle">
+              <div class="handle-line"></div>
+              <div class="handle-grip-pill">
+                <span>◀ ▶</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESIRE: LE PROTOCOLE & MODE D'EMPLOI -->
+    <section id="rituel" class="section rituel-section">
+      <div class="container">
+        <div class="section-center-head text-center max-w-4xl mx-auto">
+          <span class="eyebrow-pill">MODE D'EMPLOI & GESTUELLE</span>
+          <h2 class="section-title">
+            Le Rituel d'Application Quotidien
+            <span class="font-serif italic font-normal text-gold block-sub">pour tout type de peau, même sensible.</span>
+          </h2>
+          <p class="section-subtitle">
+            Une huile sèche et légère qui pénètre instantanément. Choisissez votre zone d'application pour découvrir le dosage et le protocole expert.
+          </p>
+        </div>
+
+        <div class="rituel-chassis-grid mt-16">
+          <!-- Interactive Selector Column -->
+          <div class="rituel-tabs-col">
+            <div class="rituel-nav-group" role="tablist">
+              <button class="rituel-tab-card active magnetic-target" data-tab="visage" role="tab" aria-selected="true" id="tab-visage">
+                <div class="tab-accent-line"></div>
+                <div class="tab-content-wrap">
+                  <span class="tab-sub">SOIN PRINCIPAL</span>
+                  <h4 class="tab-heading font-serif">Visage et Cou</h4>
+                  <p class="tab-mini">Quelques gouttes matin et soir sur peau propre</p>
+                </div>
+              </button>
+
+              <button class="rituel-tab-card magnetic-target" data-tab="cernes" role="tab" aria-selected="false" id="tab-cernes">
+                <div class="tab-accent-line"></div>
+                <div class="tab-content-wrap">
+                  <span class="tab-sub">ZONE DU REGARD</span>
+                  <h4 class="tab-heading font-serif">Cernes & Ridules</h4>
+                  <p class="tab-mini">Une seule goutte à tapoter délicatement</p>
+                </div>
+              </button>
+
+              <button class="rituel-tab-card magnetic-target" data-tab="cicatrices" role="tab" aria-selected="false" id="tab-cicatrices">
+                <div class="tab-accent-line"></div>
+                <div class="tab-content-wrap">
+                  <span class="tab-sub">ACTION CIBLÉE</span>
+                  <h4 class="tab-heading font-serif">Vergetures et Cicatrices</h4>
+                  <p class="tab-mini">Massage circulaire pour restructurer la peau</p>
+                </div>
+              </button>
+
+              <button class="rituel-tab-card magnetic-target" data-tab="cheveux" role="tab" aria-selected="false" id="tab-cheveux">
+                <div class="tab-accent-line"></div>
+                <div class="tab-content-wrap">
+                  <span class="tab-sub">FINITION BEAUTÉ</span>
+                  <h4 class="tab-heading font-serif">Cheveux et Ongles</h4>
+                  <p class="tab-mini">Sur les pointes sèches ou les cuticules</p>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Display Panel with 3D Tilt -->
+          <div class="rituel-stage-col double-bezel tilt-card">
+            <div class="bezel-inner p-10 h-full flex flex-col justify-between">
+              <div class="rituel-visual-banner mb-8">
+                <img src="assets/images/skincare-ritual.jpg" alt="Application de la goutte d'huile pure sur la peau" class="stage-macro-img" id="stage-macro-photo" width="900" height="450">
+                <div class="dosage-capsule" id="stage-dosage-tag">2 à 3 gouttes</div>
+              </div>
+
+              <div class="rituel-text-panels">
+                <!-- Visage Panel -->
+                <div class="rituel-content-pane active" id="pane-visage">
+                  <span class="card-eyebrow">RITUEL QUOTIDIEN MATIN & SOIR</span>
+                  <h3 class="pane-title font-serif">Application Visage et Cou</h3>
+                  <p class="pane-desc">
+                    Appliquer quelques gouttes matin et soir sur une peau préalablement nettoyée. Chauffer l'huile entre les paumes de vos mains avant de masser délicatement le visage et le cou avec des mouvements ascendants.
+                  </p>
+                  <div class="pane-steps-chain">
+                    <div class="chain-step">
+                      <span class="chain-num">1</span>
+                      <span>Chauffer 2 à 3 gouttes au creux des mains tièdes pour libérer les acides gras.</span>
+                    </div>
+                    <div class="chain-step">
+                      <span class="chain-num">2</span>
+                      <span>Lisser du centre du visage vers l'extérieur jusqu'aux tempes.</span>
+                    </div>
+                    <div class="chain-step">
+                      <span class="chain-num">3</span>
+                      <span>Remonter sur le cou et le décolleté avec la pulpe des doigts.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cernes Panel -->
+                <div class="rituel-content-pane hidden" id="pane-cernes">
+                  <span class="card-eyebrow">DRAINAGE & CLARTÉ DU REGARD</span>
+                  <h3 class="pane-title font-serif">Contour des Yeux et Cernes</h3>
+                  <p class="pane-desc">
+                    Une seule goutte suffit pour les deux yeux. Tapoter très légèrement de l'angle interne vers l'angle externe de la cerne avec l'annulaire, sans jamais frotter et en évitant le contact direct avec l'œil.
+                  </p>
+                  <div class="pane-steps-chain">
+                    <div class="chain-step">
+                      <span class="chain-num">1</span>
+                      <span>Déposer 1 goutte unique sur l'annulaire.</span>
+                    </div>
+                    <div class="chain-step">
+                      <span class="chain-num">2</span>
+                      <span>Tapoter en micro-pressions douces le long de l'os orbital.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cicatrices Panel -->
+                <div class="rituel-content-pane hidden" id="pane-cicatrices">
+                  <span class="card-eyebrow">RESTRUCTURATION TISSULAIRE</span>
+                  <h3 class="pane-title font-serif">Vergetures et Cicatrices</h3>
+                  <p class="pane-desc">
+                    Effectuer un massage appuyé avec quelques gouttes sur les zones présentant des cicatrices ou vergetures. La synergie d'acides gras essentiels favorise l'atténuation progressive des irrégularités cutanées.
+                  </p>
+                  <div class="pane-steps-chain">
+                    <div class="chain-step">
+                      <span class="chain-num">1</span>
+                      <span>Appliquer 3 à 5 gouttes directement sur la zone ciblée.</span>
+                    </div>
+                    <div class="chain-step">
+                      <span class="chain-num">2</span>
+                      <span>Masser en palper-rouler circulaire pendant 2 minutes consécutives.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cheveux Panel -->
+                <div class="rituel-content-pane hidden" id="pane-cheveux">
+                  <span class="card-eyebrow">NUTRITION SÈCHE & BRILLANCE</span>
+                  <h3 class="pane-title font-serif">Pointes de Cheveux et Cuticules</h3>
+                  <p class="pane-desc">
+                    Frotter quelques gouttes chauffées dans les mains sur les pointes de cheveux secs pour sceller les écailles, ou masser directement sur les cuticules pour fortifier les ongles.
+                  </p>
+                  <div class="pane-steps-chain">
+                    <div class="chain-step">
+                      <span class="chain-num">1</span>
+                      <span>Cheveux : effleurer les pointes desséchées avec les paumes.</span>
+                    </div>
+                    <div class="chain-step">
+                      <span class="chain-num">2</span>
+                      <span>Ongles : une goutte répartie sur les 10 ongles avant le coucher.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÉCOLOGIE & BIENFAITS ENVIRONNEMENTAUX -->
+    <section id="ecologie" class="section ecologie-section bg-sand-alt">
+      <div class="container">
+        <div class="eco-banner double-bezel tilt-card">
+          <div class="bezel-inner p-12">
+            <div class="eco-header-center text-center max-w-3xl mx-auto">
+              <span class="eyebrow-pill">IMPACT ÉCOLOGIQUE DU DOMAINE</span>
+              <h2 class="section-title">
+                Une culture vertueuse
+                <span class="font-serif italic font-normal text-gold block-sub">qui régénère la terre de Calabre.</span>
+              </h2>
+              <p class="section-subtitle">
+                Le figuier de barbarie apporte à l'écosystème plus qu'il ne prélève. Nos engagements concrets en Calabre :
+              </p>
+            </div>
+
+            <div class="eco-quad-grid mt-14">
+              <div class="eco-card">
+                <div class="eco-icon-housing">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                  </svg>
+                </div>
+                <h4 class="eco-card-title">Zéro Arrosage Artificiel</h4>
+                <p class="eco-card-text">Ne demande pas d'être arrosée. Nos figuiers sont nourris exclusivement par le soleil du Sud et les pluies naturelles.</p>
+              </div>
+
+              <div class="eco-card">
+                <div class="eco-icon-housing">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                  </svg>
+                </div>
+                <h4 class="eco-card-title">Barrière Anti-Feu Naturelle</h4>
+                <p class="eco-card-text">Constituées d'eau végétale dans leurs tissus charnus, les haies freinent naturellement la progression des incendies d'été.</p>
+              </div>
+
+              <div class="eco-card">
+                <div class="eco-icon-housing">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                </div>
+                <h4 class="eco-card-title">Apport en Eau Pour les Animaux</h4>
+                <p class="eco-card-text">70% d'apport en eau assuré aux troupeaux locaux via les pales nutritives, entraînant la diminution des gaz à effet de serre.</p>
+              </div>
+
+              <div class="eco-card">
+                <div class="eco-icon-housing">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </div>
+                <h4 class="eco-card-title">Fertilisation Biologique</h4>
+                <p class="eco-card-text">La culture fertilise et stabilise les sols arides contre l'érosion. Le fruit est également une source majeure de magnésium.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTION: BOUTIQUE DIRECT PRODUCTEUR -->
+    <section id="boutique" class="section boutique-section">
+      <div class="container">
+        <div class="section-center-head text-center max-w-4xl mx-auto">
+          <span class="eyebrow-pill">L'ÉDITION DIRECT DOMAINE</span>
+          <h2 class="section-title">
+            Commander l'Huile Pure de Graines
+            <span class="font-serif italic font-normal text-gold block-sub">en direct de notre atelier en Calabre.</span>
+          </h2>
+          <p class="section-subtitle">
+            Flacon en verre ambré protecteur anti-UV avec compte-gouttes doseur en laiton. Récolte fraîche conditionnée à la demande.
+          </p>
+        </div>
+
+        <div class="shop-grid mt-16">
+          <!-- Product Presentation Showcase with Tilt -->
+          <div class="shop-media-col double-bezel tilt-card">
+            <div class="bezel-inner product-gallery-wrap">
+              <img src="assets/images/hero-bottle.jpg" alt="Flacon 30ml Piccante & Belle huile pure de graines de figues de barbarie" class="product-gallery-img" id="product-master-img" width="1080" height="810">
+              <div class="product-origin-capsule">
+                <span>RÉCOLTE 2026</span>
+                <strong>Direct Producteur</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buy Box Column with Tilt -->
+          <div class="shop-buybox-col double-bezel tilt-card">
+            <div class="bezel-inner p-10">
+              <div class="buybox-top">
+                <span class="buybox-brand-tag">PICCANTE & BELLE — CALABRIA</span>
+                <h3 class="buybox-name font-serif">Olio Puro di Fico d'India</h3>
+                <p class="buybox-description">Huile vierge pure de graines de figues de barbarie, première pression à froid mécanique sans solvant.</p>
+              </div>
+
+              <!-- Price Box -->
+              <div class="buybox-price-row mt-6">
+                <div class="price-figures">
+                  <span class="price-val" id="product-display-price">54,00 €</span>
+                  <span class="price-notes">TTC • Expédition sous 24h</span>
+                </div>
+                <div class="stock-indicator">
+                  <span class="stock-pulse"></span>
+                  <span>En stock au domaine</span>
+                </div>
+              </div>
+
+              <div class="separator-line my-6"></div>
+
+              <!-- Format Selection -->
+              <div class="volume-options-block">
+                <label class="volume-label">Sélectionnez le format désiré :</label>
+                <div class="volume-grid" role="radiogroup">
+                  <button class="vol-card-btn active magnetic-target" data-size="30ml" data-price="54.00" role="radio" aria-checked="true">
+                    <span class="vol-size-name">30 ml</span>
+                    <span class="vol-caption">Cure Visage (2 mois)</span>
+                    <span class="vol-amount">54 €</span>
+                  </button>
+
+                  <button class="vol-card-btn magnetic-target" data-size="50ml" data-price="79.00" role="radio" aria-checked="false">
+                    <span class="vol-size-name">50 ml</span>
+                    <span class="vol-caption">Format Économique</span>
+                    <span class="vol-amount">79 €</span>
+                    <span class="vol-chip">-25% au ml</span>
+                  </button>
+
+                  <button class="vol-card-btn magnetic-target" data-size="duo" data-price="98.00" role="radio" aria-checked="false">
+                    <span class="vol-size-name">Duo 2×30ml</span>
+                    <span class="vol-caption">Visage, Corps & Cheveux</span>
+                    <span class="vol-amount">98 €</span>
+                    <span class="vol-chip">Offre Duo</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Quantity & Add to Cart -->
+              <div class="cart-action-group mt-8">
+                <div class="qty-stepper">
+                  <button id="qty-minus" class="qty-btn magnetic-target" aria-label="Diminuer la quantité">-</button>
+                  <span id="qty-num" class="qty-value">1</span>
+                  <button id="qty-plus" class="qty-btn magnetic-target" aria-label="Augmenter la quantité">+</button>
+                </div>
+
+                <button id="add-to-cart-btn" class="btn-primary-island flex-1 magnetic-target">
+                  <span class="btn-text">Ajouter au Panier</span>
+                  <span class="btn-icon-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+
+              <!-- Trust Points -->
+              <div class="buybox-guarantees mt-8">
+                <div class="guar-point">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4823F" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Circuit Court Direct :</strong> Sans intermédiaire, pureté intacte.</span>
+                </div>
+                <div class="guar-point">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4823F" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Conservation Prolongée :</strong> Flacon verre opaque anti-UV avec compte-gouttes.</span>
+                </div>
+                <div class="guar-point">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4823F" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span><strong>Garantie Sérénité 30 Jours :</strong> Satisfait ou intégralement remboursé.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section faq-section bg-sand-alt">
+      <div class="container max-w-4xl">
+        <div class="section-center-head text-center mx-auto mb-14">
+          <span class="eyebrow-pill">QUESTIONS FRÉQUENTES</span>
+          <h2 class="section-title">
+            Tout ce que vous devez savoir
+            <span class="font-serif italic font-normal text-gold block-sub">sur l'huile de graines de figues de barbarie.</span>
+          </h2>
+        </div>
+
+        <div class="faq-accordion-list">
+          <!-- Q1 -->
+          <div class="faq-row double-bezel">
+            <div class="bezel-inner">
+              <button class="faq-toggle-btn magnetic-target" aria-expanded="false">
+                <span class="faq-question-text">Pourquoi cette huile est-elle considérée comme la plus précieuse au monde ?</span>
+                <span class="faq-icon-cross">+</span>
+              </button>
+              <div class="faq-collapse-body">
+                <p>Les minuscules graines contenues dans les figues de barbarie ne recèlent qu'environ 5% d'huile. Il faut près d'une tonne de fruits (soit environ 30 à 50 kg de graines triées) pour extraire un seul litre d'huile par pression mécanique à froid. Sa teneur en vitamine E naturelle (1 000 mg/kg) surpasse toutes les autres huiles végétales cosmétiques.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="faq-row double-bezel mt-4">
+            <div class="bezel-inner">
+              <button class="faq-toggle-btn magnetic-target" aria-expanded="false">
+                <span class="faq-question-text">Convient-elle aux peaux grasses, mixtes ou à tendance acnéique ?</span>
+                <span class="faq-icon-cross">+</span>
+              </button>
+              <div class="faq-collapse-body">
+                <p>Parfaitement. Son indice de comédogénicité est strictement de 0 (non comédogène). Riche à plus de 60% en acide linoléique (oméga-6), elle régule la viscosité naturelle du sébum sans obstruer les pores, tout en accélérant la résorption des marques résiduelles d'acné.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="faq-row double-bezel mt-4">
+            <div class="bezel-inner">
+              <button class="faq-toggle-btn magnetic-target" aria-expanded="false">
+                <span class="faq-question-text">Quelle différence entre l'huile de graines et le macérât huileux ?</span>
+                <span class="faq-icon-cross">+</span>
+              </button>
+              <div class="faq-collapse-body">
+                <p>Le macérât huileux est une simple infusion de fleurs ou de morceaux de fruits dans une huile neutre bon marché (comme le tournesol). L'huile de Piccante & Belle est <strong>100% pure pression mécanique directe des graines</strong>, sans coupage, sans solvant chimique, délivrant la totalité des principes actifs natifs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="faq-row double-bezel mt-4">
+            <div class="bezel-inner">
+              <button class="faq-toggle-btn magnetic-target" aria-expanded="false">
+                <span class="faq-question-text">Comment se conserve-t-elle et quelle est sa durée de vie ?</span>
+                <span class="faq-icon-cross">+</span>
+              </button>
+              <div class="faq-collapse-body">
+                <p>Grâce à nos protocoles de laboratoire avec des chercheurs universitaires et à notre procédé d'extraction sans oxydation, l'huile est microbiologiquement pure. Elle conserve l'intégralité de ses vertus pendant 24 mois dans son flacon de verre ambré à température ambiante.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER FORM -->
+    <section class="section newsletter-section">
+      <div class="container max-w-3xl">
+        <div class="double-bezel tilt-card">
+          <div class="bezel-inner p-12 text-center">
+            <span class="eyebrow-pill mb-4">LETTRE DU DOMAINE</span>
+            <h2 class="section-title font-serif">Correspondances de Calabre</h2>
+            <p class="section-subtitle max-w-lg mx-auto">
+              Recevez les carnets de floraison au détroit de Messine et soyez averti en priorité lors de la mise en bouteille des petits lots de récolte.
+            </p>
+
+            <form id="newsletter-form" class="newsletter-input-unit mt-8">
+              <input type="email" id="newsletter-email" placeholder="Votre adresse email personnelle" required class="nl-field">
+              <button type="submit" class="btn-primary-island magnetic-target">
+                <span class="btn-text">Rejoindre</span>
+                <span class="btn-icon-circle">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5l7 7-7 7"></path>
+                  </svg>
+                </span>
+              </button>
+            </form>
+            <div id="newsletter-feedback" class="feedback-msg hidden mt-4">
+              Votre inscription est validée. Bienvenue au domaine.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LUXURY FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-layout-grid">
+      <div class="footer-identity-col">
+        <span class="footer-logo">Piccante & Belle</span>
+        <p class="footer-description">
+          Société agricole familiale en Calabre.<br>
+          Artisans presseurs — De nos terres arides à votre peau.
+        </p>
+        <div class="footer-geography">
+          <span>Détroit de Messine, Calabre, Italie</span>
+          <span>Aire de la Grèce Antique & Mythologique</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 class="footer-nav-title">Navigation</h4>
+        <ul class="footer-nav-list">
+          <li><a href="#terroir">Le Terroir & Climat</a></li>
+          <li><a href="#anatomie">Le Flacon d'Artisan</a></li>
+          <li><a href="#artisanat">Notre Histoire Artisanale</a></li>
+          <li><a href="#bienfaits">Les 5 Bienfaits Majeurs</a></li>
+          <li><a href="#comparatif">Résultats Avant / Après</a></li>
+          <li><a href="#rituel">Protocole & Mode d'Emploi</a></li>
+          <li><a href="#ecologie">Piliers Écologiques</a></li>
+          <li><a href="#boutique">La Boutique Directe</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-commitments-col">
+        <h4 class="footer-nav-title">Garanties & Pureté</h4>
+        <ul class="commitments-bullet-list">
+          <li>Pression mécanique à froid sans solvant</li>
+          <li>Partenariat chercheurs et biologistes</li>
+          <li>Pureté microbiologique certifiée</li>
+          <li>Zéro irrigation d'eau potable</li>
+          <li>Lutte contre le gaspillage agricole</li>
+        </ul>
+      </div>
+
+      <div class="footer-contact-col">
+        <h4 class="footer-nav-title">Atelier & Expéditions</h4>
+        <p class="footer-address">
+          Plantations & Presse Artisanale<br>
+          Calabre Méridionale — Italie<br>
+          <a href="mailto:contact@piccante-belle.it" class="footer-mail-link">contact@piccante-belle.it</a>
+        </p>
+        <div class="footer-flag-badge">
+          <span>Prodotto Autentico di Calabria</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom-bar">
+      <p>© 2026 Piccante & Belle. Tous droits réservés. L'or liquide de nos terres, directement du producteur.</p>
+      <div class="legal-links">
+        <a href="#">Mentions Légales</a>
+        <span>•</span>
+        <a href="#">Confidentialité</a>
+        <span>•</span>
+        <a href="#">Conditions de Vente</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SLIDE-OVER LUXURY CART DRAWER -->
+  <div id="cart-drawer-overlay" class="drawer-overlay" aria-hidden="true">
+    <div class="drawer-panel" id="cart-panel" role="dialog" aria-modal="true" aria-label="Votre Panier">
+      <div class="drawer-head">
+        <div>
+          <h3 class="drawer-heading font-serif">Votre Panier de Récolte</h3>
+          <span class="drawer-sub">Directement du producteur en Calabre</span>
+        </div>
+        <button id="cart-close-btn" class="close-drawer-icon magnetic-target" aria-label="Fermer le panier">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Free shipping progress bar -->
+      <div class="shipping-threshold-box">
+        <div class="shipping-desc-text" id="shipping-msg">
+          Ajoutez encore <span id="shipping-remaining" class="font-bold text-gold">6,00 €</span> pour débloquer l'expédition offerte.
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar-gold" id="shipping-bar" style="width: 90%;"></div>
+        </div>
+      </div>
+
+      <!-- Cart Item List Container -->
+      <div class="drawer-scroll-body" id="cart-items-container">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Cart Summary Footer -->
+      <div class="drawer-foot">
+        <div class="subtotal-row">
+          <span>Sous-total</span>
+          <span class="font-bold" id="cart-subtotal">54,00 €</span>
+        </div>
+        <div class="shipping-fee-row">
+          <span>Expédition</span>
+          <span class="text-green font-bold" id="cart-shipping-cost">Offerte dès 60 €</span>
+        </div>
+        <div class="total-row mt-3">
+          <span>Total TTC</span>
+          <span class="font-bold text-espresso font-serif" id="cart-total">54,00 €</span>
+        </div>
+
+        <button id="checkout-btn" class="btn-primary-island w-full mt-4 magnetic-target">
+          <span class="btn-text">Commander en Sécurité</span>
+          <span class="btn-icon-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </span>
+        </button>
+
+        <div class="drawer-reassurance mt-3">
+          <span>Paiement crypté SSL</span>
+          <span>•</span>
+          <span>Emballage recyclable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast-capsule" role="status" aria-live="polite">
+    <div class="toast-symbol">✓</div>
+    <div class="toast-body-text">
+      <strong id="toast-title">Article ajouté au panier</strong>
+      <p id="toast-desc">Flacon 30ml — Piccante & Belle</p>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
